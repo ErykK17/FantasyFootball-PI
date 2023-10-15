@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{%block title%}
+Witaj {{user.username}}
+{%endblock%}
+
+{% block content %}
+<div class="col-12 mt-2" align="center">
+<div class="btn-group">
+    <a type="button" class="btn btn-primary" id="link" href = '/points/'>Punkty</a>
+    {% if HavePlayed %}
+    <a type="button" class="btn btn-primary" id="link" href = '/transfer/'>Transfery</a>
+    {% else %}
+    <a type="button" class="btn btn-primary" id="link" href = '/transferFirst/'>Transfery</a>
+    {% endif %}
+    <a type="button" class="btn btn-primary" id="link" href = '/makeSubs/'>Dokonaj zmian w składzie</a>
+
+</div>
+<div class="col-12" align="center">
+
+{% block squad %}
+{% endblock %}
+
+{% endblock %}

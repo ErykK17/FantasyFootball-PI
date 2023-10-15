@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="col-xl-4 offset-xl-4 card border-0 shadow" style="background-color:#E2E2E2;">
+<h3 class="text-center">Logowanie</h3>
+  <form id="signin_form" method="post">
+            <div class="modal-body">
+              {% csrf_token %}
+              {% if form.errors %}
+                <div id="snackbar" style="visibility: visible">Niepoprawne dane
+                </div>
+              {% endif %}
+              <p>
+              <label for="username">Nazwa użytkownika</label><br/>
+              <input type="text" name="username" class="form-control" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username">
+              </p>
+              <p>
+              <label for="password">Hasło</label><br/>
+              <input type="password" name="password" class="form-control" autocomplete="current-password" required="" id="id_password"/>
+              </p>
+              <div class="form-group d-flex justify-content-left">
+
+                <button type="submit"
+                        class="btn btn-primary mt-4">Zaloguj
+                </button>
+              </div>
+             Nie masz konta? <a href="{% url 'register' %}"> Zarejestruj</a>
+            </div>
+          </form>
+  </div>
+{% endblock %}
+{% block extra_js %}
+  <script src='https://www.google.com/recaptcha/api.js'></script>
+  <script type="text/javascript">
+      function RemoveSnackbar(){
+          setTimeout(function () {
+              $('#snackbar').css('visibility', 'hidden');
+          }, 3000);
+      }
+      $('document').ready(RemoveSnackbar);
+  </script>
+{% endblock %}

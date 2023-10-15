@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="col-xl-4 offset-xl-4 card border-0 shadow" style="background-color:#E2E2E2;">
+<h3 class="text-center">Rejestracja</h3>
+<form method="POST">
+  <div class="modal-body">
+{% csrf_token %}
+  <p>
+              <label for="username">Wybierz nazwę użytkownika</label><br/>
+              <input type="text" name="username" class="form-control" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username">
+
+  {{ form.errors.username }}</p>
+  <p>
+              <label for="username">Email</label><br/>
+              <input type="email" name="email" class="form-control" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username">
+              {{ form.errors.email }}
+  </p>
+              <p>
+              <label for="password">Hasło</label><br/>
+              <input type="password" name="password1" class="form-control" required="" id="id_password"/>
+              {{ form.errors.password1 }}
+              </p>
+  <p>
+              <label for="password">Powtórz hasło</label><br/>
+              <input type="password" name="password2" class="form-control" required="" id="id_password"/>
+    {{ form.errors.password2 }}
+              </p>
+              <div class="form-group d-flex justify-content-left">
+                <p>
+                <button type="submit"
+                        class="btn btn-primary mt-4">Zarejestruj
+                </button>
+              </div>
+    Masz konto? <a href="{% url 'login' %}"> Zaloguj</a>
+  </div>
+
+</form>
+</div>
+{% endblock %}

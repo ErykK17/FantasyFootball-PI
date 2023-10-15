@@ -1,0 +1,266 @@
+{% extends 'welcome.html' %}
+
+{% block title %}
+Dokonaj Zmian
+{% endblock %}
+
+{% block squad %}
+<div class="btn-group m-2 ">
+    {% if supersubs %}
+    <form action="{% url 'bonusDelete' %}" method='POST'>
+    {% csrf_token %}
+    <input type="hidden" name="bonusType" value="SC">
+    <input type="hidden" name="matchdayID" value="{{matchday.id}}">
+    <input type="submit" class="btn btn-danger" name="submit" value = "Super Rezerwowi">
+    </form>
+    {% else %}
+    <form action="{% url 'addbonus' %}" method='POST'>
+        {% csrf_token %}
+        <input type="hidden" name="bonusType" value="SC">
+        <input type="hidden" name="matchdayID" value="{{matchday.id}}">
+        <input type="submit" class="btn btn-primary" name="submit" value = "Super Rezerwowi">  
+    </form>  
+    {% endif %}
+    {% if triplecaptains %}
+    <form action="{% url 'bonusDelete' %}" method='POST'>
+        {% csrf_token %}
+        <input type="hidden" name="bonusType" value="TC">
+        <input type="hidden" name="matchdayID" value="{{matchday.id}}">
+        <input type="submit" class="btn btn-danger" name="submit" value = "Potrójny Kapitan">
+    </form>
+    {% else %}
+    <form action="{% url 'addbonus' %}" method='POST'>
+        {% csrf_token %}
+        <input type="hidden" name="bonusType" value="TC">
+        <input type="hidden" name="matchdayID" value="{{matchday.id}}">
+        <input type="submit" class="btn btn-primary" name="submit" value = "Potrójny Kapitan">  
+    </form>  
+    {% endif %}
+</div>
+<div class="card m-5">
+    <div class="card-header" style="text-align: center;">Pierwszy skład</div>
+    <div class="card-body" align="center">
+        <div class="col-7" align="center">
+            <div class="row m-4" align="center">
+                    {% for item in first_squad%}
+                    {% if item.footballer.position == "FW" %}
+                    <div class="col">
+                    <div class="card mx-auto" style="width:150px;">
+                        <div class="card-header" align="center">{{item.footballer.name}}</div>
+                        <div class="card-body"><img src="{{item.footballer.team.logo.url}}" style="width: 100%; object-fit: cover;"></div>
+                        <div class="card-footer " style="width: 100%;object-fit: cover;">
+                            {% if  item.footballer.position == "FW" and enough_strikers == False %}
+                            <a type="button" class="btn btn-primary" style="width:100%" id= "link" href="/subView/{{item.id}}" style="height: 100%;"> Zdejmij </a>Za mało napastników!
+                            {% elif  item.footballer.position == "DF and enough_defenders == False"%}
+                            <a type="button" class="btn btn-primary" style="width:100%" id= "link" href="/subView/{{item.id}}"> Zdejmij </a>Za mało obrońców!
+                            {% else %}
+                            <a type="button" class="btn btn-primary mb-1" style="width:100%" id= "link" href="/subView/{{item.id}}"> <i class="fa-solid fa-arrows-rotate"></i> </a>
+                            {% endif %}
+                            <form action = "{% url 'setCaptain' %}" method='POST'>
+                                {% csrf_token %}
+                                <input type="hidden" name="matchday" value={{matchday.id}}>
+                                <input type="hidden" name="footballerID" value={{item.id}}>
+                                <input type="hidden" name="captain" value="C">
+                                {% if item.captain %}
+                                <button type="submit" style="width:100%" class="btn btn-success mb-1" name="submit"><i class="fa-solid fa-c"></i></button>
+                                {% else %}
+                                <button type="submit" style="width:100%" class="btn btn-primary mb-1" name="submit"><i class="fa-solid fa-c"></i></button>
+                                {% endif %}
+                            </form>
+                            <form action = "{% url 'setCaptain' %}" method='POST'>
+                                {% csrf_token %}
+                                <input type="hidden" name="matchday" value={{matchday.id}}>
+                                <input type="hidden" name="footballerID" value={{item.id}}>
+                                <input type="hidden" name="captain" value="VC">
+                                {% if item.vice_captain %}
+                                <button type="submit" style="width:100%" class="btn btn-success mb-1" name="submit"><i class="fa-solid fa-v"></i></button>
+                                {% else %}
+                                <button type="submit" style="width:100%" class="btn btn-primary mb-1" name="submit"><i class="fa-solid fa-v"></i></button>
+                                {% endif %}
+                            </form>
+                        </div>
+                    </div>
+                    </div>
+                    
+                    {%endif%}
+                    {% endfor%}
+            </div>
+            <div class="row m-4 align-items-center" align="center">
+                {% for item in first_squad%}
+                {% if item.footballer.position == "MF" %}
+                <div class="col">
+                <div class="card" style="width: 150px;">
+                    <div class="card-header" align="center" style="width: 100%;">{{item.footballer.name}}</div>
+                    <div class="card-body" width="100px"><img src="{{item.footballer.team.logo.url}}" style="width: 100%; object-fit: cover;"></div>
+                    <div class="card-footer " style="width: 100%;object-fit: cover;">
+                        {% if  item.footballer.position == "FW" and enough_strikers == False %}
+                        <a type="button" class="btn btn-primary" style="width:100%" id= "link" href="/subView/{{item.id}}" style="height: 100%;"> Zdejmij </a>Za mało napastników!
+                        {% elif  item.footballer.position == "DF and enough_defenders == False"%}
+                        <a type="button" class="btn btn-primary" style="width:100%" id= "link" href="/subView/{{item.id}}"> Zdejmij </a>Za mało obrońców!
+                        {% else %}
+                        <a type="button" class="btn btn-primary mb-1" style="width:100%" id= "link" href="/subView/{{item.id}}"> <i class="fa-solid fa-arrows-rotate"></i> </a>
+                        {% endif %}
+                        <form action = "{% url 'setCaptain' %}" method='POST'>
+                            {% csrf_token %}
+                            <input type="hidden" name="matchday" value={{matchday.id}}>
+                            <input type="hidden" name="footballerID" value={{item.id}}>
+                            <input type="hidden" name="captain" value="C">
+                            {% if item.captain %}
+                            <button type="submit" style="width:100%" class="btn btn-success mb-1" name="submit"><i class="fa-solid fa-c"></i></button>
+                            {% else %}
+                            <button type="submit" style="width:100%" class="btn btn-primary mb-1" name="submit"><i class="fa-solid fa-c"></i></button>
+                            {% endif %}
+                        </form>
+                        <form action = "{% url 'setCaptain' %}" method='POST'>
+                            {% csrf_token %}
+                            <input type="hidden" name="matchday" value={{matchday.id}}>
+                            <input type="hidden" name="footballerID" value={{item.id}}>
+                            <input type="hidden" name="captain" value="VC">
+                            {% if item.vice_captain %}
+                            <button type="submit" style="width:100%" class="btn btn-success mb-1" name="submit"><i class="fa-solid fa-v"></i></button>
+                            {% else %}
+                            <button type="submit" style="width:100%" class="btn btn-primary mb-1" name="submit"><i class="fa-solid fa-v"></i></button>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+                </div>
+                {%endif%}
+                {% endfor%}
+            </div>
+            <div class="row m-4 align-items-center" align="center">
+                {% for item in first_squad%}
+                {% if item.footballer.position == "DF" %}
+                <div class="col">
+                <div class="card" style="width: 150px;">
+                    <div class="card-header" align="center" style="width: 100%; overflow-y: auto;">{{item.footballer.name}}</div>
+                    <div class="card-body" width="100px"><img src="{{item.footballer.team.logo.url}}" style="width: 100%; object-fit: cover;"></div>
+                    <div class="card-footer " style="width: 100%;object-fit: cover;">
+                        {% if  item.footballer.position == "FW" and enough_strikers == False %}
+                        <a type="button" class="btn btn-primary" style="width:100%" id= "link" href="/subView/{{item.id}}" style="height: 100%;"> Zdejmij </a>Za mało napastników!
+                        {% elif  item.footballer.position == "DF and enough_defenders == False"%}
+                        <a type="button" class="btn btn-primary" style="width:100%" id= "link" href="/subView/{{item.id}}"> Zdejmij </a>Za mało obrońców!
+                        {% else %}
+                        <a type="button" class="btn btn-primary mb-1" style="width:100%" id= "link" href="/subView/{{item.id}}"> <i class="fa-solid fa-arrows-rotate"></i> </a>
+                        {% endif %}
+                        <form action = "{% url 'setCaptain' %}" method='POST'>
+                            {% csrf_token %}
+                            <input type="hidden" name="matchday" value={{matchday.id}}>
+                            <input type="hidden" name="footballerID" value={{item.id}}>
+                            <input type="hidden" name="captain" value="C">
+                            {% if item.captain %}
+                            <button type="submit" style="width:100%" class="btn btn-success mb-1" name="submit"><i class="fa-solid fa-c"></i></button>
+                            {% else %}
+                            <button type="submit" style="width:100%" class="btn btn-primary mb-1" name="submit"><i class="fa-solid fa-c"></i></button>
+                            {% endif %}
+                        </form>
+                        <form action = "{% url 'setCaptain' %}" method='POST'>
+                            {% csrf_token %}
+                            <input type="hidden" name="matchday" value={{matchday.id}}>
+                            <input type="hidden" name="footballerID" value={{item.id}}>
+                            <input type="hidden" name="captain" value="VC">
+                            {% if item.vice_captain %}
+                            <button type="submit" style="width:100%" class="btn btn-success mb-1" name="submit"><i class="fa-solid fa-v"></i></button>
+                            {% else %}
+                            <button type="submit" style="width:100%" class="btn btn-primary mb-1" name="submit"><i class="fa-solid fa-v"></i></button>
+                            {% endif %}
+                        </form>
+            </div>
+                </div>
+                </div>
+                {%endif%}
+                {% endfor%}
+            </div>
+            <div class="row m-4 align-items-center" align="center">
+                {% for item in first_squad%}
+                {% if item.footballer.position == "GK"%}
+                <div class="col">
+                <div class="card" style="width: 150px;">
+                    <div class="card-header" align="center" style="width: 100%;">{{item.footballer.name}}</div>
+                    <div class="card-body" width="100px"><img src="{{item.footballer.team.logo.url}}" style="width: 100%; object-fit: cover;"></div>
+                    <div class="card-footer " style="width: 100%;object-fit: cover;">
+                        {% if  item.footballer.position == "FW" and enough_strikers == False %}
+                        <a type="button" class="btn btn-primary" style="width:100%" id= "link" href="/subView/{{item.id}}" style="height: 100%;"> Zdejmij </a>Za mało napastników!
+                        {% elif  item.footballer.position == "DF and enough_defenders == False"%}
+                        <a type="button" class="btn btn-primary" style="width:100%" id= "link" href="/subView/{{item.id}}"> Zdejmij </a>Za mało obrońców!
+                        {% else %}
+                        <a type="button" class="btn btn-primary mb-1" style="width:100%" id= "link" href="/subView/{{item.id}}"> <i class="fa-solid fa-arrows-rotate"></i> </a>
+                        {% endif %}
+                        <form action = "{% url 'setCaptain' %}" method='POST'>
+                            {% csrf_token %}
+                            <input type="hidden" name="matchday" value={{matchday.id}}>
+                            <input type="hidden" name="footballerID" value={{item.id}}>
+                            <input type="hidden" name="captain" value="C">
+                            {% if item.captain %}
+                            <button type="submit" style="width:100%" class="btn btn-success mb-1" name="submit"><i class="fa-solid fa-c"></i></button>
+                            {% else %}
+                            <button type="submit" style="width:100%" class="btn btn-primary mb-1" name="submit"><i class="fa-solid fa-c"></i></button>
+                            {% endif %}
+                        </form>
+                        <form action = "{% url 'setCaptain' %}" method='POST'>
+                            {% csrf_token %}
+                            <input type="hidden" name="matchday" value={{matchday.id}}>
+                            <input type="hidden" name="footballerID" value={{item.id}}>
+                            <input type="hidden" name="captain" value="VC">
+                            {% if item.vice_captain %}
+                            <button type="submit" style="width:100%" class="btn btn-success mb-1" name="submit"><i class="fa-solid fa-v"></i></button>
+                            {% else %}
+                            <button type="submit" style="width:100%" class="btn btn-primary mb-1" name="submit"><i class="fa-solid fa-v"></i></button>
+                            {% endif %}
+                        </form>
+            </div>
+                </div>
+                </div>
+                {%endif%}
+                {% endfor%}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card m-5">
+    <div class="card-header" style="text-align: center;">Ławka rezerwowych</div>
+    <div class="card-body" align="center">
+        <div class="col-8" align="center">
+            <div class="row m-2" align="center">
+
+                <div class="col">
+                <div class="card" style="width: 150px;">
+                    <div class="card-header" align="center">{{sub_keeper.footballer.name}}</div>
+                    <div class="card-body" width="100px"><img src="{{sub_keeper.footballer.team.logo.url}}" style="width: 100%; object-fit: cover;"></div>
+                    
+                </div>
+                </div>
+
+
+                <div class="col">
+                <div class="card" style="width: 150px;">
+                    <div class="card-header" align="center">{{first_sub.footballer.name}}</div>
+                    <div class="card-body" width="100px"><img src="{{first_sub.footballer.team.logo.url}}" style="width: 100%; object-fit: cover;"></div>
+                    
+                </div>
+                </div>
+
+
+                <div class="col">
+                <div class="card" style="width: 150px;">
+                    <div class="card-header" align="center">{{second_sub.footballer.name}}</div>
+                    <div class="card-body" width="100px"><img src="{{second_sub.footballer.team.logo.url}}" style="width: 100%; object-fit: cover;"></div>
+                    
+                </div>
+                </div>
+
+
+                <div class="col">
+                <div class="card" style="width: 150px;">
+                    <div class="card-header" align="center">{{third_sub.footballer.name}}</div>
+                    <div class="card-body" width="100px"><img src="{{third_sub.footballer.team.logo.url}}" style="width: 100%; object-fit: cover;"></div>
+            
+                </div>
+                </div>
+
+        </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

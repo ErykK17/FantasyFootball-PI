@@ -1,0 +1,35 @@
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" type = "text/css" href = "{% static 'css/styles.css' %}">
+{% endblock %}
+
+<header>
+    <nav class="navbar navbar-expand-sm bg-primary navbar-light shadow rounded px-2 fixed-top">
+        <a class="navbar-brand">
+            <img src = "{% static 'images/fantasylogo.png/'%}" width="120" height="90" class="d-inline-block align-top" alt="">
+        </a>
+        <ul class="nav navbar-nav navbar-right navbar-dark bg-primary ml-auto">
+            {% if  user.is_authenticated %}
+            <li class="nav-item bg-primary dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ user.username }}</a>
+                
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{% url 'ranking'%}">Rankingi</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'manageFr'%}">Znajomi</a>
+                </div>
+            {% endif %}
+            </li>
+            {% if user.is_authenticated %}
+            {% if user.is_staff %}
+            <li class="nav-item bg-primary"><a class="nav-link" href="{% url 'adminDashboard' %}">Admin Dashboard</a></li>
+            {% endif %}
+            <li class="nav-item bg-primary"><a class="nav-link" href="{% url 'logout' %}">Wyloguj</a></li>
+            {% else%}
+            <li class="nav-item bg-primary"><a class="nav-link" href="{% url 'login' %}">Logowanie</a></li>
+            <li class="nav-item bg-primary"><a class="nav-link" href="{% url 'register' %}">Rejestracja</a></li>
+            {% endif %}
+        </ul>    
+    </nav>
+</header>

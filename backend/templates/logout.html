@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Zostałeś pomyślnie wylogowany</h1>
+  <h2>Za chwilę zostaniesz przekierowany na stronę główną</h2>
+{% endblock %}
+{% block extra_js%}
+    window.onload = function(){
+        setTimeout(function() {
+            $.get("{% url 'homepage' %}") 
+       }, 5000);
+    }
+{% endblock%}

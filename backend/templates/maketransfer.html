@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 align="center">Wymień zawodnika</h1>
+
+<div class="card m-2 mx-auto mb-5" align="center" style="width: 150px;">
+    <div class="card-header" align="center">{{playerOut.footballer.name}}</div>
+    <div class="card-body" width="100px"><img src="{{playerOut.footballer.team.logo.url}}" style="width: 100%; object-fit: cover;"></div>
+    <div class="card-footer" align="center">{{playerOut.footballer.price}}€</div>
+    <a type="button" class="stretched-link" id= "link" href="/transferFootballer/{{item.id}}"></a>
+</div>
+
+<div class="card">
+    <div class=""></div>
+</div>
+
+<div class="row">
+{%for item in NewFootballers%} 
+        <div class="card mx-auto" style="width: 150px;">
+            <div class="card-header" align="center">{{item.name}}</div>
+            <div class="card-body" width="100px"><img src="{{item.team.logo.url}}" style="width: 100%; object-fit: cover;"></div>
+            <div class="card-footer" align="center">{{item.price}}€</div>
+            <form action="{% url 'makeTransfer' %}" method = 'POST'>
+                {% csrf_token %}
+                <input type="hidden" name="playerinID" value="{{item.id}}">
+                <input type="hidden" name="playeroutID" value="{{playerOut.id}}">
+                <input type="submit"  style = "width: 100%;" class="btn btn-success" name="submit" class="stretched-link" value="Wymień">
+            </form>
+        </div>
+    </th>
+    </tr>   
+{%endfor%} 
+</div
+</table>
+
+{% endblock %}
+

@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% block title %}
+Edycja Meczu 
+{% endblock %}
+
+{% block content%}
+
+<div class="row m-3" align="center">
+    <div class="col-6" align="center">
+        <img src="{{Match.HomeTeam.logo.url}}" alt="{{match.AwayTeam.name}}" width="120" height="120">
+    </div>
+    <div class="col-6" align="center">
+        <img src="{{Match.AwayTeam.logo.url}}" alt="{{match.AwayTeam.name}}" width="120" height="120">
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-6">
+        <div class="card m-3">
+            <div class="card-header"> Dodaj piłkarza gospodarzy do 1. składu </div>
+                <div class="card-body" m-2 >
+                    <form action="{% url 'addHome' %}" method = 'POST'>
+                        {% csrf_token %}
+                        <label for="team">Dodaj piłkarza </label>
+                        <div class="row">
+                            <div class="col-6">
+                                <select name="footballerID" class="custom-select">
+                                    {% for footballer in HomePlayers %}
+                                    <option value="{{footballer.id}}"> {{footballer.name}} </option>
+                                    {% endfor%}
+                                </select>
+                            </div>
+                        <div class="col-6" align = "center"> 
+                            <input type="hidden" name="matchID" value={{Match.id}}>
+                            <input type="submit" name="filter" value="Dodaj">
+                        </div>
+                        </div>
+                    </form>
+                    <div class="card mt-3">
+                        <div class="card-body" style="overflow: auto; display: block; height:200px; width: 100%;" align="center">
+                        <table class="table table-hover">
+                    {% for footballer in Match.HomePlayed.all%}
+                            <tr>
+                                <th>{{footballer.name}}</th>
+                            </tr>
+                    {% endfor %}
+                        </table>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card m-3">
+            <div class="card-header"> Dodaj Piłkarza gospodarzy do 1. składu </div>
+                <div class="card-body">
+                    <form action="{% url 'addAway' %}" method = 'POST'>
+                        {% csrf_token %}
+                        <label for="team">Dodaj piłkarza</label>
+                        <div class="row">
+                            <div class="col-6">
+                                <select name="footballerID" class="custom-select">
+                                    {% for footballer in AwayPlayers %}
+                                    <option value="{{footballer.id}}"> {{footballer.name}} </option>
+                                    {% endfor%}
+                                </select>
+                            </div>
+                        <div class="col-6" align = "center"> 
+                            <input type="hidden" name="matchID" value={{Match.id}}>
+                            <input type="submit" name="filter" value="Dodaj">
+                        </div>
+                        </div>
+                    </form>
+                    <div class="card mt-3">
+                        <div class="card-body" style="overflow: auto; display: block; height:200px; width: 100%;" align="center">
+                        <table class="table table-hover">
+                    {% for footballer in Match.AvayPlayed.all %}
+                            <tr>
+                                <th>{{footballer.name}}</th>
+                            </tr>
+                    {% endfor %}
+                        </table>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        <div class="card m-3">
+            <div class="card-header"> Dodaj wydarzenie </div>
+                <div class="card-body">
+                    <form action="{% url 'addMatchEvent' %}" method = 'POST'>
+                        {% csrf_token %}
+                        <label for="team">Dodaj wydarzenie</label>
+                        <div class="row">
+                            <div class="col-4">
+                                <select name="footballerID" class="custom-select">
+                                    {% for footballer in HomePlayers %}
+                                    <option value="{{footballer.id}}"> {{footballer.name}} </option>
+                                    {% endfor%}
+                                </select>
+                            </div>
+                        <div class="col-4">
+                            <select name="eventID" class="custom-select">
+                                {% for event in events %}
+                                <option value="{{event.id}}"> {{event.event_name}} </option>
+                                {% endfor%}
+                            </select>
+                        </div>
+                        <div class="col-4" align = "center"> 
+                            <input type="hidden" name="matchID" value={{Match.id}}>
+                            <input type="submit" name="filter" value="Dodaj">
+                        </div>
+                        </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card m-3">
+            <div class="card-header"> Dodaj wydarzenie </div>
+                <div class="card-body">
+                    <form action="{% url 'addMatchEvent' %}" method = 'POST'>
+                        {% csrf_token %}
+                        <label for="team">Dodaj wydarzenie</label>
+                        <div class="row">
+                            <div class="col-4">
+                                <select name="footballerID" class="custom-select">
+                                    {% for footballer in AwayPlayers %}
+                                    <option value="{{footballer.id}}"> {{footballer.name}} </option>
+                                    {% endfor%}
+                                </select>
+                            </div>
+                        <div class="col-4">
+                            <select name="eventID" class="custom-select">
+                                {% for event in events %}
+                                <option value="{{event.id}}"> {{event.event_name}} </option>
+                                {% endfor%}
+                            </select>
+                        </div>
+                        <div class="col-4" align = "center"> 
+                            <input type="hidden" name="matchID" value={{Match.id}}>
+                            <input type="submit" name="filter" value="Dodaj">
+                        </div>
+                        </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-12">
+<div class="card mt-3">
+    <div class="card-header">Wydarzenia</div>
+    <div class="card-body" style="overflow: auto; display: block; height:400px; width: 100%;" align="center">
+    <table class="table table-hover">
+{% for event in Match.event.all %}
+        <tr>
+            <th>{{event.footballer}}</th>
+            <th>{{event.event}}</th>
+        </tr>
+{% endfor %}
+    </table>
+    </div>
+</div>
+</div>
+
+
+{% endblock%}

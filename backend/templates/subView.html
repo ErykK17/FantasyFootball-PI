@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+<h1 align="center">Wymień zawodnika</h1>
+
+<div class="card m-2 mx-auto mb-5" align="center" style="width: 150px;">
+    <div class="card" style="width: 150px;">
+        <div class="card-header" align="center">{{player_off.footballer.name}}</div>
+        <div class="card-body" width="100px"><img src="{{player_off.footballer.team.logo.url}}" style="width: 100%; object-fit: cover;"></div>
+    </div>
+</div>
+
+<div class="card m-5">
+    <div class="card-header" style="text-align: center;">Ławka rezerwowych</div>
+    <div class="card-body" align="center">
+        <div class="col-8" align="center">
+            <div class="row m-2" align="center">
+
+                <div class="col">
+                <div class="card" style="width: 150px;">
+                    <div class="card-header" align="center">{{sub_keeper.footballer.name}}</div>
+                    <div class="card-body" width="100px"><img src="{{sub_keeper.footballer.team.logo.url}}" style="width: 100%; object-fit: cover;">
+                        <form id="myformgk" action="{% url 'subOnOff' %}" method = 'POST'>
+                            {% csrf_token %}
+                            <input type="hidden" name="playerOff" value="{{player_off.id}}">
+                            <input type="hidden" name="playerIn" value="{{sub_keeper.id}}">
+                            <input type="hidden" name="enoughDF" value="{{enough_defenders}}">
+                            <input type="hidden" name="enoughFW" value="{{enough_strikers}}">
+                            <a href="#" class="stretched-link" onclick="document.getElementById('myformgk').submit()"></a>
+                        </form>
+                    </div>
+                    
+                </div>
+                </div>
+
+
+                <div class="col">
+                <div class="card" style="width: 150px;">
+                    <div class="card-header" align="center">{{first_sub.footballer.name}}</div>
+                    <div class="card-body" width="100px"><img src="{{first_sub.footballer.team.logo.url}}" style="width: 100%; object-fit: cover;"></div>
+                    <form id="myforms1" action="{% url 'subOnOff' %}" method = 'POST'>
+                        {% csrf_token %}
+                        <input type="hidden" name="playerOff" value="{{player_off.id}}">
+                        <input type="hidden" name="playerIn" value="{{first_sub.id}}">
+                        <input type="hidden" name="enoughDF" value="{{enough_defenders}}">
+                        <input type="hidden" name="enoughFW" value="{{enough_strikers}}">
+                        <a href="#" class="stretched-link" onclick="document.getElementById('myforms1').submit()"></a>
+                    </form>
+                </div>
+                </div>
+
+
+                <div class="col">
+                <div class="card" style="width: 150px;">
+                    <div class="card-header" align="center">{{second_sub.footballer.name}}</div>
+                    <div class="card-body" width="100px"><img src="{{second_sub.footballer.team.logo.url}}" style="width: 100%; object-fit: cover;"></div>
+                    <form id="myforms2" action="{% url 'subOnOff' %}" method = 'POST'>
+                        {% csrf_token %}
+                        <input type="hidden" name="playerOff" value="{{player_off.id}}">
+                        <input type="hidden" name="playerIn" value="{{second_sub.id}}">
+                        <input type="hidden" name="enoughDF" value="{{enough_defenders}}">
+                        <input type="hidden" name="enoughFW" value="{{enough_strikers}}">
+                        <a href="#" class="stretched-link" onclick="document.getElementById('myforms2').submit()"></a>
+                    </form>
+                </div>
+                </div>
+
+
+                <div class="col">
+                <div class="card" style="width: 150px;">
+                    <div class="card-header" align="center">{{third_sub.footballer.name}}</div>
+                    <div class="card-body" width="100px"><img src="{{third_sub.footballer.team.logo.url}}" style="width: 100%; object-fit: cover;"></div>
+                    <form id="myforms3" action="{% url 'subOnOff' %}" method = 'POST'>
+                        {% csrf_token %}
+                        <input type="hidden" name="playerOff" value="{{player_off.id}}">
+                        <input type="hidden" name="playerIn" value="{{third_sub.id}}">
+                        <input type="hidden" name="enoughDF" value="{{enough_defenders}}">
+                        <input type="hidden" name="enoughFW" value="{{enough_strikers}}">
+                        <a href="#" class="stretched-link" onclick="document.getElementById('myforms3').submit()"></a>
+                    </form>
+                </div>
+                </div>
+
+        </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

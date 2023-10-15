@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{%block title%}
+Twój skład w: {{matchday}}
+{%endblock%}
+{%block content%}
+<div class="btn-group">
+{%for mday in Matchdays%}
+<a type="button" class="btn btn-primary" id="link" href = '/squad/{{mday.id}}/'>{{mday.name}}</a>
+{%endfor%}
+</div>
+
+{%block squad%}
+{%endblock%}
+{%block extra_js%}
+
+{%endblock%}
+{%endblock%}
+
+

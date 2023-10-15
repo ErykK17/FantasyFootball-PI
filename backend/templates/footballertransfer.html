@@ -1,0 +1,116 @@
+{% extends 'welcome.html' %}
+
+
+{%block squad%}
+
+<div class="card m-5">
+    <div class="card-header" style="text-align: center;">Pierwszy skład  Pozostałe transfery: {{TransfersLeft}} </div>
+    <div class="card-body" align="center">
+        <div class="col-7" align="center">
+            <div class="row m-4" align="center">
+                    {% for item in MyFootballers%}
+                    {% if item.footballer.position == "FW" and item.squad_role == "FS" %}
+                    <div class="col">
+                    <div class="card" style="width: 150px;">
+                        <div class="card-header" align="center">{{item.footballer.name}}</div>
+                        <div class="card-body" width="100px"><img src="{{item.footballer.team.logo.url}}" style="width: 100%; object-fit: cover;"></div>
+                        <a type="button" class="stretched-link" id= "link" href="/transferFootballer/{{item.id}}"></a>
+                    </div>
+                    </div>
+                    
+                    {%endif%}
+                    {% endfor%}
+            </div>
+            <div class="row m-4 align-items-center" align="center">
+                {% for item in MyFootballers%}
+                {% if item.footballer.position == "MF" and item.squad_role == "FS"%}
+                <div class="col">
+                <div class="card" style="width: 150px;">
+                    <div class="card-header" align="center" style="width: 100%;">{{item.footballer.name}}</div>
+                    <div class="card-body" width="100px"><img src="{{item.footballer.team.logo.url}}" style="width: 100%; object-fit: cover;"></div>
+                    <a type="button" class="stretched-link" id= "link" href="/transferFootballer/{{item.id}}"></a>
+                </div>
+                </div>
+                {%endif%}
+                {% endfor%}
+            </div>
+            <div class="row m-4 align-items-center" align="center">
+                {% for item in MyFootballers%}
+                {% if item.footballer.position == "DF" and item.squad_role == "FS"%}
+                <div class="col">
+                <div class="card" style="width: 150px;">
+                    <div class="card-header" align="center" style="width: 100%; overflow-y: auto;">{{item.footballer.name}}</div>
+                    <div class="card-body" width="100px"><img src="{{item.footballer.team.logo.url}}" style="width: 100%; object-fit: cover;"></div>
+                    <a type="button" class="stretched-link" id= "link" href="/transferFootballer/{{item.id}}"></a>
+                </div>
+                </div>
+                {%endif%}
+                {% endfor%}
+            </div>
+            <div class="row m-4 align-items-center" align="center">
+                {% for item in MyFootballers%}
+                {% if item.footballer.position == "GK" and item.squad_role == "FS"%}
+                <div class="col">
+                <div class="card" style="width: 150px;">
+                    <div class="card-header" align="center" style="width: 100%;">{{item.footballer.name}}</div>
+                    <div class="card-body" width="100px"><img src="{{item.footballer.team.logo.url}}" style="width: 100%; object-fit: cover;"></div>
+                    <a type="button" class="stretched-link" id= "link" href="/transferFootballer/{{item.id}}"></a>
+                </div>
+                </div>
+                {%endif%}
+                {% endfor%}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card m-5">
+    <div class="card-header" style="text-align: center;">Ławka rezerwowych</div>
+    <div class="card-body" align="center">
+        <div class="col-8" align="center">
+            <div class="row m-2" align="center">
+                {% for item in MyFootballers%}
+                {% if item.squad_role == "SUBB" %}
+                <div class="col">
+                <div class="card" style="width: 150px;">
+                    <div class="card-header" align="center">{{item.footballer.name}}</div>
+                    <div class="card-body" width="100px"><img src="{{item.footballer.team.logo.url}}" style="width: 100%; object-fit: cover;"></div>
+                    <a type="button" class="stretched-link" id= "link" href="/transferFootballer/{{item.id}}"></a>
+                </div>
+                </div>
+                {%endif%}
+                {% if item.squad_role == "SUB1" %}
+                <div class="col">
+                <div class="card" style="width: 150px;">
+                    <div class="card-header" align="center">{{item.footballer.name}}</div>
+                    <div class="card-body" width="100px"><img src="{{item.footballer.team.logo.url}}" style="width: 100%; object-fit: cover;"></div>
+                    <a type="button" class="stretched-link" id= "link" href="/transferFootballer/{{item.id}}"></a>
+                </div>
+                </div>
+                {%endif%}
+                {% if item.squad_role == "SUB2" %}
+                <div class="col">
+                <div class="card" style="width: 150px;">
+                    <div class="card-header" align="center">{{item.footballer.name}}</div>
+                    <div class="card-body" width="100px"><img src="{{item.footballer.team.logo.url}}" style="width: 100%; object-fit: cover;"></div>
+                    <a type="button" class="stretched-link" id= "link" href="/transferFootballer/{{item.id}}"></a>
+                </div>
+                </div>
+                {%endif%}
+                {% if item.squad_role == "SUB3" %}
+                <div class="col">
+                <div class="card" style="width: 150px;">
+                    <div class="card-header" align="center">{{item.footballer.name}}</div>
+                    <div class="card-body" width="100px"><img src="{{item.footballer.team.logo.url}}" style="width: 100%; object-fit: cover;"></div>
+                    <a type="button" class="stretched-link" id= "link" href="/transferFootballer/{{item.id}}"></a>
+                </div>
+                </div>
+                {%endif%}
+                {% endfor%}
+        </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock%}

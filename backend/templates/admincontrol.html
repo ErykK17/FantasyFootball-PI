@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+{% block content %}
+<div class="card m-3">
+    <div class="card-header"> Dodaj mecz </div>
+        <div class="card-body">
+            <form action="{% url 'createMatch' %}" method = 'POST'>
+                {% csrf_token %}
+                <label for="team">Wybierz drużynę</label>
+                <div class="row">
+                    <div class="col-3">
+                        <select name="hometeam" class="custom-select">
+                            {% for team in Teams %}
+                            <option value="{{team.id}}"> {{team.name}} </option>
+                            {% endfor%}
+                        </select>
+                    </div>
+                <div class="col-3">
+                    <select name="awayteam" class="custom-select">
+                        {% for team in Teams %}
+                        <option value="{{team.id}}"> {{team.name}} </option>
+                        {% endfor%}
+                    </select>
+                </div>
+                <div class="col-3">
+                    <select name="matchday" class="custom-select">
+                        {% for mday in Matchdays %}
+                        <option value="{{mday.id}}"> {{mday.name}} </option>
+                        {% endfor%}
+                    </select>
+                    
+                </div>
+                <div class="col-3" align = "center"> 
+                    <input type="submit" class="btn btn-success" name="submit" value="Dodaj">
+                </div>
+                </div>
+            </form>
+    </div>
+</div>
+
+
+
+<div class="card m-3">
+    <div class="card-header">Zarządzaj spotkaniem</div>
+    <div class="card-body" style="overflow: auto; display: block; height: 550px; width: 100%;" align="center">
+        <table class="table table-hover">
+            <tr>
+                <th> Gospodarze </th>
+                <th> Goście </th>
+                <th> Kolejka </th>
+            </tr>
+            {% for match in Matches%}
+            <tr>
+                <th> {{match.HomeTeam.name}}</th>
+                <th> {{match.AwayTeam.name}}</th>
+                <th> {{match.Matchday.name}}</th>
+                <th>
+                <div class="row">
+                    <div class="col-6">
+                    <a type="button" class="btn btn-success" id="link" href = '/matchManage/{{match.id}}/'>Edytuj</a>
+                    </div>
+                    <div class="col-6">
+                    <form action="{% url 'deleteMatch' %}" method='POST'>
+                        {% csrf_token %}
+                        <input type="hidden" name="matchID" value="{{match.id}}">
+                        <input type="submit" name="submit" class="btn btn-danger" value="Usuń">
+                    </form>
+                    </div>
+                </div>
+                </th>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+
+    {% block edit %}
+    {% endblock %}
+    
+{% endblock %}

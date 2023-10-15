@@ -1,0 +1,20 @@
+{% extends 'welcome.html' %}
+
+{%block title%}
+Twoje Poprzednie Składy
+{%endblock%}
+
+{% block squad %}
+<div class="col-12 m-2" align="center">
+<div class="btn-group">
+    {%for mday in Matchdays%}
+    <a type="button" class="btn btn-primary" id="link" href = '/points/{{mday.id}}/'>{{mday.name}}</a>
+    {%endfor%}
+</div>
+</div>
+
+{% block mysquad %}
+{% endblock %}
+{% endblock %}
+{% block extra_js %}
+{% endblock %}

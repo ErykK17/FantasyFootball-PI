@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <head>
+        <script src="https://kit.fontawesome.com/4595554f12.js" crossorigin="anonymous"></script>            <link rel="stylesheet" type = 'text/css' href = "{% static 'css/bootstrap.min.css'%}">
+        {% block extra_css %}
+        <link rel="stylesheet" type = "text/css" href = "{% static 'css/styles.css' %}">
+        {% endblock%}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    </head> 
+    <title>Fantasy Football</title>
+</head>
+<body>
+{%block navbar%}
+    {%include 'navbar.html'%}
+{%endblock%}
+
+{%block content%}
+
+<div class="welcomemessage">
+    <div>‎ </div>
+    <div class="container text-xs-center">
+        <div class="col-12">
+            <h1 class="display-3" style="text-align: center;">Witaj w My Fantasy Football!</h1>
+            <p class="display-6" style="text-align: center;">Internetowej grze piłkarskiej w której wcielasz się w managera wirtualnej drużyny!</p>
+            <div class="col-12">
+                <ul class="list-unstyled"style="text-align: center;">
+                    <li><i class="fa-solid fa-euro-sign"></i> Kupuj piłkarzy </li>
+                    <li> <i class="fa-solid fa-arrows-rotate"></i> Zarządzaj wyjściowym składem </li>
+                    <li> <i class="fa-solid fa-money-bill-transfer"></i> Dokonuj transferów </li>
+                    <li> <i class="fa-solid fa-user-group"></i> Porównuj wyniki ze znajomymi</li>
+                </ul>
+            </div>
+            <div class="row login-question mt-2 mb-2" style="margin-bottom: 10px;">
+                <div class="col-6" align="center">
+                    <span style="margin-right: 10px;">Masz konto?</span>
+                    <a class="btn btn-outline-light" href="{% url 'login' %}">Zaloguj się!</a>
+                </div>
+                <div class="col-6" align="center">
+                    <span style="margin-right: 10px;">Nie masz konta?</span>
+                    <a class="btn btn-outline-light" href="{% url 'register' %}">Zarejestruj się!</a>
+                </div>
+            </div>
+            <div>‎ </div>
+        </div>
+    </div>
+</div>
+
+<div class="container col-10">
+    <h1 style="text-align: center;">Poznaj zasady:</h1>
+    <div id="accordion">
+        <div class="card">
+            <div class="card-header" id="headingOne" style="background-color: #007bff;">
+            <h5 class="mb-0">
+                <button class="btn btn-link stretched-link text-decoration-none" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="color: white">
+                Kupowanie piłkarzy
+                </button>
+            </h5>
+            </div>
+        
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+                Aby brać udział w rozgrywkach Fantasy Football, użytkownik musi skompletować drużynę składającą się z 15 piłkarzy:   
+                <ul style="text-align: left;">
+                    <li> 2 bramkarzy </li>
+                    <li> 5 obrońców </li>
+                    <li> 5 pomocników </li>
+                    <li> 3 napastników </li>
+                </ul> 
+                W trakcie budowania składu, użytkownik musi przestrzegać wirtualnego budżetu. Każdy zawodnik ma przypisaną cenę a łączna wartość składu nie może przekraczać 100.000.000 €. Dodatkowo liczba zawodników z tej samej drużyny nie może przekraczać wartości przypisanej ręcznie do danej kolejki . 
+            </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingTwo" style="background-color: #2288f6;">
+            <h5 class="mb-0">
+                <button class="btn btn-link stretched-link collapsed text-decoration-none" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="color: white">
+                Zarządzanie składem
+                </button>
+            </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+                <p>Użytkownik wybiera 11 zawodników, którzy będą częścią tzw. pierwszego składu. Punkty zdobyte przez tych zawodników będą uwzględniane przy liczeniu końcowego wyniku. Pozostała czwórka zawodników, znajdzie się na tzw. ławce rezerwowych a ich punkty nie będą uwzględniane. Rezerwowi zostaną automatycznie dodani do pierwszego składu podczas podliczania punktów, jeśli któryś z zawodników pierwszego składu nie wystąpi w meczu (o ile rezerwowy zagrał mecz). </p>	
+                <p>W przypadku rezerwowych zawodników z pola (nie będący bramkarzami), będą wprowadzani do składu wg ustalonej przez użytkownika kolejności o ile nie zostaną naruszone zasady struktury składu (liczba zawodników na danej pozycji nie może zostać zmieniona, np. jeśli użytkownik miał w pierwszym składzie 4 pomocników i jeden z nich nie zagra, wejść może tylko drugi pomocnik).</p>
+                <p>Dodatkowo użytkownik wybiera kapitana i vice-kapitana zespołu, którego punkty będą liczone podwójnie (również te ujemne). Jeśli kapitan nie zagra w meczu, podwajane będą punkty vice-kapitana, a jeśli obaj nie zagrają, bonus nie zostaje przyznany nikomu.  </p>          
+            </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingThree" style="background-color: #51a5ff;">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed stretched-link text-decoration-none" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="color: white">
+                Transfery
+                </button>
+            </h5>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+                Co każdą kolejkę, użytkownik ma prawo do dokonania 3 transferów. Transfer to wymiana jednego piłkarza naszego składu za innego piłkarza, którego nie ma w naszym składzie. Suma wartości nowych piłkarzy nie może przekraczać sumy wartości usuniętych piłkarzy (może być mniejsza) oraz nie mogą zostać naruszone zasady składu(np. ilość zawodników z jednego zespołu). Jeśli użytkownik nie rozegrał jeszcze żadnej kolejki, ma nielimitowane transfery aż do rozpoczęcia następnej kolejki.            </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingFour" style="background-color: #83baf5;">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed stretched-link text-decoration-none" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour" style="color: white">
+                    Bonusy
+                    </button>
+                </h5>
+                </div>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                <div class="card-body">
+                    Użytkownik ma do dyspozycji 2 jednorazowe bonusy:
+                    <ul style="text-align: left;">
+                        <li> Potrójny kapitan – punkty kapitana liczone są potrójnie zamiast podwójnie. </li>
+                        <li> Super rezerwowi - punkty zdobyte przez rezerwowych są uwzględniane w wyniku końcowym. </li>
+                    </ul> 
+                </div>
+                </div>
+            </div>
+        </div>
+        </div>
+</div>
+{%endblock%}
+<script src="{% static 'js/bootstrap.min.js'%}"></script>
+<script src="{% static 'js/jquery-3.5.1.min.js'%}"></script>
+{%block extra_js%}
+{%endblock%}
+</body>
+</html>

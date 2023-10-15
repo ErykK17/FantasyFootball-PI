@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-6 table-responsive">
+        <div class="card m-3">
+            <div class="card-heading" align="center"><h1 class="display-5 bg-white" style="text-align: center;">Ranking ogólny</h1></div>
+            <div class="card-body" style="overflow: auto; display: block; height: 700px; width: 100%;" align="center">
+                <table class="table table-hover" >
+                    <tr>
+                        <th class="table-light">Pozycja</th>
+                        <th class="table-light">Imię</th>
+                        <th class="table-light">Wynik</th>
+                    </tr>
+                    {% for score in scores %}
+                    {% if score.owner == request.user %}
+                    <tr class="table-success">
+                    {% else %}
+                    <tr>
+                    {% endif %}
+                        <th>{{forloop.counter}}</th>
+                        <th>{{score.owner.username}}</th>
+                        <th>{{score.score}}</th>
+                    </tr>
+                    {% endfor %}  
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-6"  style="overflow: auto; display: block; width: 100%;" align="center">
+        <div class="card m-3">
+            <div class="card-heading" align="center"><h1 class="display-5 bg-white" style="text-align: center;">Ranking znajomych</h1></div>
+            <div class="card-body" style="overflow: auto; display: block; height: 700px; width: 100%;" align="center">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Pozycja</th>
+                        <th>Imię</th>
+                        <th>Wynik</th>
+                    </tr>
+                    {% for score in scores %}
+                    {% if score.owner == request.user or score.owner in request.user.friends.all%}
+                    {% if score.owner == request.user %}
+                    <tr class="table-success">
+                    {% else %}
+                    <tr>
+                    {% endif %}
+                        <th>{{forloop.counter}}</th>
+                        <th>{{score.owner.username}}</th>
+                        <th>{{score.score}}</th>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}  
+                </table>
+                </div>
+        </div>
+</div>
+
+{% endblock  %}
+

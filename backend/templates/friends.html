@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title%}
+Znajomi 
+{% endblock%}
+
+{% block content %}
+<div class="row">
+    <div class="col-4 table-responsive ">
+        <div class="card m-2">
+            <div class="card-heading" align="center"><h1 class="display-5 bg-white" style="text-align: center;">Wyślij zaproszenie</h1></div>
+                <div class="card-body" style="overflow: auto; display: block; height: 700px; width: 100%;" align="center">
+                    <table class="table table-hover">
+                        <tr style="width: 100%;">
+                            <th class="table-light">
+                                Użytkowik
+                            </th>
+                        </tr>
+                    {% for user in AllUsers %}
+                    {% if not user.is_superuser %}
+                    {% if user not in request.user.friends.all and user != request.user %}
+                        {% if user not in IsSent %}
+                        <tr>
+                            <th>{{user}}</th>
+                            <th><a type="button" class="btn btn-primary" href="/send_fr/{{user.id}}">Wyślij zaproszenie</a></th>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <th>{{user}}</th>
+                            <th><a type="button" class="btn btn-success">Wysłano zaproszenie</a></th>
+                        </tr>
+                        {% endif %}
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                    </table>
+                </div>
+        </div>
+    </div>
+
+    <div class="col-4 table-responsive ">
+        <div class="card m-2">
+            <div class="card-heading" align="center"><h1 class="display-5 bg-white" style="text-align: center;">Zaakceptuj zaproszenie</h1></div>
+                <div class="card-body" style="overflow: auto; display: block; height: 700px; width: 100%;" align="center">
+                    {% if AllFr %}
+                    <table class="table table-hover">
+                        <tr style="width: 100%;">
+                            <th class="table-light">
+                                Użytkowik
+                            </th>
+                        </tr>
+                        {% for fr in AllFr %}
+                        <tr>
+                            <th>{{fr.inviting_user}}</th>
+                            <th><a type="button" class="btn btn-primary" href="/accept_fr/{{fr.id}}">Zaakceptuj zaproszenie</a></th>
+                        </tr>
+                    {% endfor %}
+                    </table>
+                    {% else %}
+                    <p>Brak zaproszeń</p>
+                    {% endif %}
+                </div>
+        </div>
+    </div>
+
+    <div class="col-4 table-responsive ">
+        <div class="card m-2">
+            <div class="card-heading" align="center"><h1 class="display-5 bg-white" style="text-align: center;">Moi Znajomi</h1></div>
+                <div class="card-body" style="overflow: auto; display: block;block; height: 700px; width: 100%;" align="center">
+                    <table class="table table-hover">
+                    {% for friend in request.user.friends.all%}
+                        <tr>
+                            <th>{{friend}}</th>
+                            <th>
+                            <form action="{% url 'deleteFriend' %}" method='POST'>
+                                {% csrf_token %}
+                                <input type="hidden" name="friendID" value={{friend.id}}>
+                                <input type="submit" class="btn btn-danger" name="submit" value="usuń">
+                            </form>
+                        </th>
+                        </tr>
+                    {% endfor %}
+                    </table>
+                </div>
+        </div>
+    </div>
+
+</div>
+{% endblock%}
